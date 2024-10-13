@@ -90,7 +90,7 @@ export default {
 
     async fetchNutritionalInfo(imageURL) {
       try {
-        const genAI = new GoogleGenerativeAI("AIzaSyBYkWmK_OlRDkHmNdjItm0JB8J_KsqQlY8");
+        const genAI = new GoogleGenerativeAI("API KEY"); // Replace API KEY with your API key
         const mimeType = this.getMimeType(imageURL); // Get MIME type
 
         const imagePart = await this.urlToGenerativePart(imageURL, mimeType);
