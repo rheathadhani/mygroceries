@@ -1,5 +1,5 @@
 # mygroceries - grocery store (e-commerce)
-Developed in Vue.js, Node.js, Bootstrap, mySQL
+Developed in Vue.js, Node.js, Express.js Bootstrap, mySQL
 
 ### Features
 - Developed a user-friendly e-commerce platform for visually impaired users.
