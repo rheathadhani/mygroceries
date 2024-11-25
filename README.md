@@ -1,4 +1,4 @@
-# mygroceries - grocery store (e-commerce)
+# MyGroceries - grocery store (e-commerce)
 Developed in Vue.js, Node.js, Express.js Bootstrap, mySQL
 
 ### Features
