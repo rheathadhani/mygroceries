@@ -1,5 +1,5 @@
 <template>
-  <nav id="nav-bar" class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <nav v-if="isLoggedIn()" id="nav-bar" class="navbar navbar-expand-lg navbar-dark bg-dark">
     <!-- Brand -->
     <router-link to="/products" class="navbar-brand">
       <h3 class="d-none d-lg-block mt-2">MyGroceries</h3>
@@ -16,14 +16,8 @@
     <div class="collapse navbar-collapse" id="navbarContent">
       <!-- Search bar and button (centered in the navbar) -->
       <div class="search-container d-flex justify-content-center mx-auto my-lg-0">
-        <input 
-          type="text" 
-          v-model="searchTerm" 
-          class="form-control me-2" 
-          placeholder="Search for items" 
-          style="width: 60%;"
-          @keyup.enter="searchProducts"
-        />
+        <input type="text" v-model="searchTerm" class="form-control me-2" placeholder="Search for items"
+          style="width: 60%;" @keyup.enter="searchProducts" />
         <button class="btn btn-light search-button border-dark" @click="searchProducts">Search</button>
       </div>
 
@@ -45,6 +39,10 @@
       </ul>
     </div>
   </nav>
+
+  <div v-else>
+    <!-- When not logged in, hide the navbar and show a "Back to Login" button -->
+  </div>
 </template>
 
 <script>
@@ -56,6 +54,10 @@ export default {
     };
   },
   methods: {
+    isLoggedIn() {
+      // Logic to check if the user is logged in (for example, based on the token)
+      return !!localStorage.getItem('authToken'); // Check if a token exists in localStorage
+    },
     searchProducts() {
       if (this.searchTerm.trim()) {
         // Push to the /products route with the search query as a parameter
@@ -67,6 +69,9 @@ export default {
       localStorage.removeItem('authToken');
       // Redirect to the welcome page
       this.$router.push('/welcome');
+    },
+    goToLogin() {
+      this.$router.push("/welcome"); // Redirect to the login/welcome page
     }
   }
 };
@@ -103,9 +108,11 @@ export default {
   .search-container {
     max-width: 60%;
   }
+
   .navbar-brand h1 {
     display: none;
   }
+
   .navbar-brand h4 {
     display: block;
   }

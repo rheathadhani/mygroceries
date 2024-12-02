@@ -27,7 +27,8 @@
                   <h4>Nutritional Information</h4>
                   <p v-if="nutritionalInfo">{{ nutritionalInfo }}</p>
                   <p v-else>Loading nutritional information...</p> <!-- Nutritional info will be populated here -->
-                  <p class="font-italic text-muted" v-if="nutritionalInfo">This content is AI generated. AI may not always be accurate.</p>
+                  <p class="font-italic text-muted" v-if="nutritionalInfo">This content is AI generated. AI may not
+                    always be accurate.</p>
                 </div>
               </div>
 
@@ -142,8 +143,6 @@ export default {
         reader.readAsDataURL(blob); // Read the Blob as a data URL
       });
     },
-
-
     async checkProductInCart() {
       try {
         const token = localStorage.getItem('authToken');

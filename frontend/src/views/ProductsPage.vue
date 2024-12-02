@@ -17,7 +17,6 @@
 import axios from 'axios';
 import ProductsGrid from "../components/ProductsGrid.vue";
 import CategoriesList from '../components/CategoriesList.vue';
-//import FilterProduct from '../components/FilterProduct.vue';
 
 export default {
   name: "ProductsPage",
@@ -29,13 +28,22 @@ export default {
     return {
       filteredProducts: [],
       allProducts: [], // Store all products initially
-      selectedPriceRange: [2, 50],
+      cartItems: [], // Store cart items here
     };
   },
   watch: {
     // Watch for changes in the route query (search term)
     '$route.query.search'(newSearchTerm) {
       this.filterProductsBySearch(newSearchTerm);
+    }
+  },
+  computed: {
+    cartQuantity() {
+      if (!this.cartItems || !Array.isArray(this.cartItems)) {
+        return 0;
+      }
+      const cartItem = this.cartItems.find(item => item.productID === this.product.productID);
+      return cartItem ? cartItem.quantity : 0;
     }
   },
   methods: {
@@ -49,6 +57,20 @@ export default {
         console.error('Failed to fetch products:', error);
       }
     },
+    async fetchCartItems() {
+      try {
+        const token = localStorage.getItem('authToken'); // Get token from localStorage
+        const response = await axios.get('http://localhost:5500/cart', {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+          },
+        });
+        this.cartItems = response.data; // Store cart items
+      } catch (error) {
+        console.error('Failed to fetch cart items:', error);
+      }
+    },
+
     filterProductsBySearch(searchTerm) {
       if (searchTerm) {
         // Filter products based on the search term
@@ -69,6 +91,7 @@ export default {
   },
   async mounted() {
     await this.fetchProducts(); // Fetch products when the page loads
+    await this.fetchCartItems(); // Fetch cart items when the page loads
 
     // Apply search filtering if there's a query in the URL
     if (this.$route.query.search) {

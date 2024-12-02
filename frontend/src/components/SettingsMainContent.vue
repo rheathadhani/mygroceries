@@ -45,6 +45,11 @@
         </div>
       </div>
     </div>
+    <div class="mt-4">
+      <button v-if="!isLoggedIn()" class="btn btn-dark" @click="goBackToLogin">
+        Back to Login
+      </button>
+    </div>
   </div>
 </template>
 
@@ -78,12 +83,29 @@ export default {
         option.setAttribute('data-name', voice.name);
         voiceSelect.appendChild(option);
       });
+
+      voiceSelect.addEventListener("change", (event) => {
+        const selectedOption = event.target.options[event.target.selectedIndex];
+        const voiceName = selectedOption.getAttribute("data-name");
+
+        // Emit an event to the parent to store the selected voice
+        const selectedVoice = voices.find(voice => voice.name === voiceName);
+        this.$emit("selectedVoice", selectedVoice);
+      });
     },
+
     enableSpeech() {
       this.$emit("enableSpeech");
     },
     disableSpeech() {
       this.$emit("disableSpeech");
+    },
+    isLoggedIn() {
+      // Logic to check if the user is logged in
+      return !!localStorage.getItem('authToken');
+    },
+    goBackToLogin() {
+      this.$router.push('/welcome');
     }
   }
 }

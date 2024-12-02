@@ -58,8 +58,8 @@ export default {
       }
     },
 
-    async removeFromCart(productID) {
-      const product = this.cartItems.find(item => item.productID === productID);
+    async removeFromCart(productName) {
+      const product = this.cartItems.find(item => item.productName === productName);
 
       if (!product) return;
 
@@ -75,17 +75,32 @@ export default {
         });
 
         // Remove the item from cartItems after successful deletion
-        this.cartItems = this.cartItems.filter(item => item.productID !== productID);
+        this.cartItems = this.cartItems.filter(item => item.productName !== productName);
       } catch (error) {
         console.error('Failed to remove product from cart:', error);
         alert('Failed to remove product from cart. Please try again.');
       }
     },
 
-    updateQuantity(productId, newQuantity) {
-      const product = this.cartItems.find(item => item.productID === productId);
+    async updateQuantity(productName, newQuantity) {
+      const product = this.cartItems.find(item => item.productName === productName);
       if (product) {
-        product.quantity = newQuantity;
+        try {
+          const token = localStorage.getItem('authToken');
+          await axios.patch('http://localhost:5500/cart', {
+            productName,
+            quantity: newQuantity
+          }, {
+            headers: {
+              'Authorization': `Bearer ${token}`,
+              'Content-Type': 'application/json'
+            }
+          });
+
+          product.quantity = newQuantity;
+        } catch (error) {
+          console.error('Failed to update quantity:', error);
+        }
       }
     },
 

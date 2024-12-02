@@ -12,7 +12,8 @@
         <button v-if="!showQuantityControls" id="quantity" class="btn btn-dark" @click.stop="addToCart"> + </button>
         <div v-else>
           <button id="quantity" class="btn btn-dark" @click.stop="increaseQuantity"> + </button>
-          <input type="text" v-model="quantity" id="quantity-input" class="form-control d-inline-block text-center" disabled />
+          <input type="text" v-model="quantity" id="quantity-input" class="form-control d-inline-block text-center"
+            disabled />
           <button id="quantity" class="btn btn-dark" @click.stop="decreaseQuantity"> - </button>
         </div>
       </div>
@@ -80,8 +81,8 @@ export default {
 
         console.log('Product quantity updated');
       } catch (error) {
-        console.error('Failed to update product quantity:', error);
-        alert('Failed to update product quantity. Please try again.');
+        //console.error('Failed to update product quantity:', error);
+        //alert('Failed to update product quantity. Please try again.');
       }
     },
 
@@ -102,7 +103,7 @@ export default {
     }
   }
 };
-</script> 
+</script>
 
 
 

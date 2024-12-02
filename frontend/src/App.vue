@@ -3,7 +3,8 @@
     <NavBar v-if="showNavBar" />
     <!-- Listen for events from SettingsMainContent.vue -->
     <router-view @convertToSmall="convertToSmall" @convertToMedium="convertToMedium" @convertToLarge="convertToLarge"
-      @enableSpeech="enableSpeech" @disableSpeech="disableSpeech"/>
+      @enableSpeech="enableSpeech" @disableSpeech="disableSpeech" @selectedVoice="selectedVoice = $event" />
+
   </div>
 </template>
 
@@ -22,6 +23,7 @@ export default {
       baseFontSize: null, // Store the base font size of paragraphs and headers
       speechEnabled: false, // Toggle for speech functionality
       excludedRoutes: ["/admin", "/welcome"], // List of routes where speech and font scaling are disabled
+      selectedVoice: null, // Store the selected speech voice
     };
   },
   computed: {
@@ -67,14 +69,8 @@ export default {
       utterance.rate = 1;
       utterance.pitch = 1;
 
-      const selectedVoice = document.querySelector("#voiceSelect");
-      if (selectedVoice) {
-        const selectedOption = selectedVoice.options[selectedVoice.selectedIndex];
-        const voiceName = selectedOption.getAttribute("data-name");
-        const voice = speechSynthesis.getVoices().find(v => v.name === voiceName);
-        if (voice) {
-          utterance.voice = voice;
-        }
+      if (this.selectedVoice) {
+        utterance.voice = this.selectedVoice;
       }
 
       speechSynthesis.speak(utterance);
@@ -106,6 +102,7 @@ export default {
         el.removeEventListener("mouseout", this.handleMouseout);
       });
     },
+
     handleMouseover(event) {
       const el = event.target;
       let prefix = "";
@@ -129,45 +126,50 @@ export default {
           prefix = "Section: ";
           break;
         case "img": {
-          const altText = el.getAttribute("alt") || "Image";
-          prefix = `Image: ${altText}`;
+          prefix = "Image: ";
           break;
         }
         case "form":
           prefix = "Form: ";
           break;
-        case "input":
-          switch (el.type) {
-            case "radio":
-              prefix = "Radio button: ";
-              break;
-            case "date":
-              prefix = "Date input: ";
-              break;
-            case "datetime-local":
-              prefix = "Datetime input: ";
-              break;
-            case "text": {
-              const inputLabel = el.getAttribute("aria-label") || "Text input";
-              prefix = `${inputLabel}: `;
-              break;
+        case "input": {
+          const placeholder = el.getAttribute("placeholder");
+          if (placeholder) {
+            prefix = `Placeholder: ${placeholder}`;
+          } else {
+            switch (el.type) {
+              case "radio":
+                prefix = "Radio button: ";
+                break;
+              case "date":
+                prefix = "Date input: ";
+                break;
+              case "datetime-local":
+                prefix = "Datetime input: ";
+                break;
+              case "text": {
+                const inputLabel = el.getAttribute("aria-label") || "Text input";
+                prefix = `${inputLabel}: `;
+                break;
+              }
+              case "textarea":
+                prefix = "Text area: ";
+                break;
+              case "password":
+                prefix = "Password input: ";
+                break;
+              case "email":
+                prefix = "Email input: ";
+                break;
+              case "checkbox":
+                prefix = "Checkbox: ";
+                break;
+              default:
+                prefix = "Input field: ";
             }
-            case "textarea":
-              prefix = "Text area: ";
-              break;
-            case "password":
-              prefix = "Password input: ";
-              break;
-            case "email":
-              prefix = "Email input: ";
-              break;
-            case "checkbox":
-              prefix = "Checkbox: ";
-              break;
-            default:
-              prefix = "Input field: ";
           }
           break;
+        }
         case "select":
           prefix = "Select: ";
           break;
@@ -183,18 +185,30 @@ export default {
           break;
       }
 
+      // Check if there is text content to speak
       const text = el.textContent.trim();
       if (text) {
         this.speak(`${prefix} ${text}`);
       }
 
-      if (["p", "h1", "h2", "h3", "label", "span", "button", "img", "input", "a", "li", "ul", "select", "option", "div"].includes(el.tagName.toLowerCase())) {
-        el.style.border = "3px solid red";
+      // Check if the element is an input and has a placeholder attribute
+      if (el.tagName.toLowerCase() === "input" && el.getAttribute("placeholder")) {
+        const placeholderText = el.getAttribute("placeholder");
+        this.speak(`Placeholder: ${placeholderText}`);
       }
+
+      // Save the original border style and apply the red border
+      el.dataset.originalBorder = el.style.border;
+      el.style.border = "3px solid red";
     },
+
     handleMouseout(event) {
       const el = event.target;
-      el.style.border = "none";
+
+      // Restore the original border style
+      el.style.border = el.dataset.originalBorder || "none";
+      delete el.dataset.originalBorder;
+
       this.stopSpeech();
     },
     applyConversion() {

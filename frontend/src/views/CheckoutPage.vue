@@ -143,14 +143,12 @@ export default {
     },
     async handlePayNow() {
       try {
-        //console.log("Selected Address in Pay Now:", this.selectedAddress);
-
         // Ensure the selectedAddress is properly defined and has the 'address' field
-        if (!this.selectedAddress.address) {
+        if (!this.selectedAddress || !this.selectedAddress.address) {
           throw new Error('Address information is missing.');
         }
 
-        // Before trying to format the date, log it to check the format
+        // Log the raw selected date and time for debugging
         console.log("Raw Selected Date & Time:", this.selectedDateTime);
 
         // Validate if `this.selectedDateTime` is not undefined or an empty string
@@ -160,13 +158,23 @@ export default {
           return;
         }
 
-        // Declare formattedDateTime outside of the try-catch block
+        // Declare the formattedDateTime variable
         let formattedDateTime;
 
-        // Convert selectedDateTime to MySQL compatible DATETIME format
+        // Try to format the selectedDateTime to the correct format
         try {
-          formattedDateTime = new Date(this.selectedDateTime).toISOString().slice(0, 19).replace('T', ' ');
-          console.log("Formatted Date & Time:", formattedDateTime); // Log the formatted value
+          // Create a new Date object from the selected date
+          let localDateTime = new Date(this.selectedDateTime);
+
+          // Adjust to the local timezone (browser's timezone) using getTimezoneOffset
+          let timezoneOffset = localDateTime.getTimezoneOffset() * 60000; // Get the timezone offset in milliseconds
+          localDateTime = new Date(localDateTime.getTime() - timezoneOffset);
+
+          // Format to MySQL-compatible DATETIME (YYYY-MM-DD HH:mm:ss)
+          formattedDateTime = localDateTime.toISOString().slice(0, 19).replace('T', ' ');
+
+          // Log the formatted date and time
+          console.log("Formatted Local Date & Time:", formattedDateTime);
         } catch (error) {
           console.error("Error formatting date:", error.message);
           alert("Invalid date selected.");
@@ -191,28 +199,35 @@ export default {
           cardID: paymentID,
           bankAccountID,
           orderItems: this.cartItems,
-          totalPrice: this.cartItems.reduce((total, item) => total + item.quantity * item.productPrice, 0)
+          totalPrice: this.cartItems.reduce((total, item) => total + item.quantity * item.productPrice, 0),
         };
 
+        // Get the auth token from localStorage
         const token = localStorage.getItem('authToken');
+
+        // Send the request to the backend to create the order
         const response = await axios.post('http://localhost:5500/checkout', orderPayload, {
           headers: {
             'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
-          }
+            'Content-Type': 'application/json',
+          },
         });
 
+        // If successful, log the success and clear the cart
         console.log('Order placed successfully:', response.data);
         alert('Order placed successfully!');
 
-        console.log("Clearing cart items...")
+        // Clear cart items and redirect to the profile page
         this.clearCartItems();
         this.$router.push('/profile');
+
       } catch (error) {
+        // Log the error and display an alert
         console.error('Failed to place the order:', error.message);
         alert('Failed to place the order.');
       }
     },
+
 
     clearCartItems() {
       const token = localStorage.getItem('authToken');
@@ -230,10 +245,6 @@ export default {
           console.error('Failed to clear cart:', error.message);
         });
     }
-
-
-
-
   },
   mounted() {
     this.fetchCartItems();

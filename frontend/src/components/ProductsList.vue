@@ -8,13 +8,12 @@
         <p>Total: RM {{ (product.productPrice * product.quantity).toFixed(2) }}</p>
         <!-- Quantity Controls -->
         <div class="quantity-controls">
-          <button @click="changeQuantity(product, -1)" :disabled="product.quantity <= 1"
-            class="quantity-button">-</button>
+          <button @click="changeQuantity(product, -1)" :disabled="product.quantity <= 1" class="quantity-button">-</button>
           <span class="quantity-display">{{ product.quantity }}</span>
           <button @click="changeQuantity(product, 1)" class="quantity-button">+</button>
         </div>
       </div>
-      <button class="remove-button btn btn-dark" @click="emitRemoveProduct(product.productID)">Remove</button>
+      <button class="remove-button btn btn-dark" @click="emitRemoveProduct(product.productName)">Remove</button>
     </div>
   </div>
 </template>
@@ -26,17 +25,18 @@ export default {
   methods: {
     changeQuantity(product, change) {
       const newQuantity = product.quantity + change;
-
       if (newQuantity >= 1) {
-        this.$emit('updateQuantity', product.productID, newQuantity);
+        // Emit with productName instead of productID
+        this.$emit('updateQuantity', product.productName, newQuantity);
       }
     },
-    emitRemoveProduct(productID) {
-      this.$emit('removeProduct', productID); // Emit the product ID to the parent component
+    emitRemoveProduct(productName) {
+      this.$emit('removeProduct', productName); // Emit the productName to the parent component
     }
   }
 };
 </script>
+
 
 <style scoped>
 .product-container {

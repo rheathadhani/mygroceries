@@ -44,7 +44,8 @@
               <label for="filterCategory">Filter by Category:</label>
               <select id="filterCategory" v-model="filterCategory" class="form-control">
                 <option value="">All</option>
-                <option v-for="category in categories" :key="category.id" :value="category.name">{{ category.name }}</option>
+                <option v-for="category in categories" :key="category.id" :value="category.name">{{ category.name }}
+                </option>
               </select>
             </div>
 
@@ -128,7 +129,8 @@
             </div>
             <div class="mb-3">
               <label for="newProductDescription" class="form-label">Description</label>
-              <textarea id="newProductDescription" v-model="newProduct.description" class="form-control" required></textarea>
+              <textarea id="newProductDescription" v-model="newProduct.description" class="form-control"
+                required></textarea>
             </div>
             <div class="mb-3">
               <label for="newProductImage" class="form-label">Image URL</label>
@@ -209,13 +211,17 @@ export default {
 
       // Apply price filter
       if (this.filterPrice !== null) {
-        if (this.filterPriceCondition === "lt") {
-          filtered = filtered.filter(product => product.price < this.filterPrice);
-        } else if (this.filterPriceCondition === "eq") {
-          filtered = filtered.filter(product => product.price === this.filterPrice);
-        } else if (this.filterPriceCondition === "gt") {
-          filtered = filtered.filter(product => product.price > this.filterPrice);
-        }
+        const priceFilterValue = Number(this.filterPrice);  // Convert filterPrice to a number
+        filtered = filtered.filter(product => {
+          const productPrice = Number(product.price);  // Convert product.price to a number
+          if (this.filterPriceCondition === "lt") {
+            return productPrice < priceFilterValue;
+          } else if (this.filterPriceCondition === "eq") {
+            return productPrice === priceFilterValue;  // Use strict equality with numbers
+          } else if (this.filterPriceCondition === "gt") {
+            return productPrice > priceFilterValue;
+          }
+        });
       }
 
       return filtered;
@@ -345,6 +351,7 @@ export default {
       this.filterCategory = "";
       this.filterPriceCondition = "eq";
       this.filterPrice = null;
+      this.searchQuery = "";
     },
     generateReport(type) {
       const dataToExport = this.filteredProducts; // Use filtered data for export

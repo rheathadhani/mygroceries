@@ -64,11 +64,11 @@ export default {
   },
   methods: {
     formatDate(date) {
-      if (!date) return "Invalid Date";
+      if (!date) return "";
       const parsedDate = new Date(date);
       return !isNaN(parsedDate)
         ? parsedDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
-        : "Invalid Date";
+        : "";
     },
     splitAddresses(addressString) {
       return addressString ? addressString.split('|') : [];

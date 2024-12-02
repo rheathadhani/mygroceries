@@ -131,21 +131,26 @@ export default {
     },
     async saveProfile() {
       try {
+        console.log("Profile data before saving:", this.user); // Log profile data before saving
+
         const token = localStorage.getItem('authToken'); // Get the auth token
 
-        await axios.patch('http://localhost:5500/profile', this.user, {
+        // Send the PATCH request to update the profile
+        const response = await axios.patch('http://localhost:5500/profile', this.user, {
           headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json',
           },
         });
 
+        console.log('Server response:', response); // Log server response
         alert('Profile updated successfully!');
       } catch (error) {
-        console.error('Failed to save profile:', error);
+        console.error('Failed to save profile:', error.response ? error.response.data : error.message); // Log error message and response
         alert('Failed to save profile. Please try again.');
       }
     }
+
   },
   mounted() {
     this.fetchProfile(); // Fetch the profile when the component is mounted
