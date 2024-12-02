@@ -96,7 +96,7 @@ export default {
       try {
         const token = localStorage.getItem('authToken'); // Get the auth token
 
-        const response = await axios.get('http://localhost:5500/profile', {
+        const response = await axios.get('https://mygroceries-backend.vercel.app/profile', {
           headers: {
             'Authorization': `Bearer ${token}`,
           },
@@ -136,7 +136,7 @@ export default {
         const token = localStorage.getItem('authToken'); // Get the auth token
 
         // Send the PATCH request to update the profile
-        const response = await axios.patch('http://localhost:5500/profile', this.user, {
+        const response = await axios.patch('https://mygroceries-backend.vercel.app/profile', this.user, {
           headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json',

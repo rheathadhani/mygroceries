@@ -33,7 +33,7 @@ export default {
     async fetchProductPerformance() {
       try {
         const token = localStorage.getItem('authToken'); // Get auth token from local storage
-        const response = await axios.get('http://localhost:5500/admin/product-performance', {
+        const response = await axios.get('https://mygroceries-backend.vercel.app/admin/product-performance', {
           headers: {
             Authorization: `Bearer ${token}`,
           },

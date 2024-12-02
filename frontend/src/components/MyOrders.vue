@@ -121,7 +121,7 @@ export default {
     async fetchOrders() {
       try {
         const token = localStorage.getItem('authToken');
-        const response = await axios.get('http://localhost:5500/orders', {
+        const response = await axios.get('https://mygroceries-backend.vercel.app/orders', {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -136,7 +136,7 @@ export default {
     async fetchOrdersByStatus(status) {
       try {
         const token = localStorage.getItem('authToken');
-        const response = await axios.get(`http://localhost:5500/orders?status=${status}`, {
+        const response = await axios.get(`https://mygroceries-backend.vercel.app/orders?status=${status}`, {
           headers: {
             'Authorization': `Bearer ${token}`
           }

@@ -36,7 +36,7 @@ export default {
         const token = localStorage.getItem('authToken');
 
         // Send a POST request to the backend to add a new category
-        const response = await axios.post('http://localhost:5500/admin/categories', this.category, {
+        const response = await axios.post('https://mygroceries-backend.vercel.app/admin/categories', this.category, {
           headers: {
             'Authorization': `Bearer ${token}`, // Pass the token in the Authorization header
           },

@@ -27,13 +27,14 @@ app.use(express.urlencoded({ extended: true }));
 
 // Configure CORS to allow requests from the frontend endpoint
 app.use(cors({
-  origin: 'http://localhost:8080', 
+  origin: 'https://mygroceries-snowy.vercel.app',
   methods: ['GET', 'POST', 'PATCH', 'DELETE', 'PUT'], 
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true 
 }));
 
-app.use('/images', express.static(path.join('C:/Users/Rhea Thadhani/Desktop/final-year-project/FYPSystem/frontend/src/assets/images')));
+//app.use('/images', express.static(path.join('C:/Users/Rhea Thadhani/Desktop/final-year-project/FYPSystem/frontend/src/assets/images')));
+app.use('/images', express.static(path.join(__dirname, 'images')));
 
 // Register all the routes
 app.use(categoryRoutes);

@@ -28,7 +28,7 @@ export default {
     async fetchSalesData() {
       const token = localStorage.getItem('authToken');
       try {
-        const response = await axios.get('http://localhost:5500/admin/sales-over-time', {
+        const response = await axios.get('https://mygroceries-backend.vercel.app/admin/sales-over-time', {
           headers: {
             Authorization: `Bearer ${token}`
           }

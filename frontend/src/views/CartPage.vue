@@ -3,14 +3,16 @@
     <div class="card shadow-sm">
       <!-- Card Body for Product List and Total -->
       <div class="card-body pt-2">
-        <ProductsList :products="cartItems" @updateQuantity="updateQuantity" @removeProduct="removeFromCart"></ProductsList>
+        <ProductsList :products="cartItems" @updateQuantity="updateQuantity" @removeProduct="removeFromCart">
+        </ProductsList>
 
         <!-- Total Price -->
         <h3 id="total-price" class="text-end mt-4">Total: RM {{ totalPrice }}</h3>
 
         <!-- Checkout Button -->
         <router-link to="/checkout" id="checkout-link">
-          <button id="checkout-button" class="btn btn-dark w-100 mt-3" @click="saveCartForCheckout">Proceed to Checkout</button>
+          <button id="checkout-button" class="btn btn-dark w-100 mt-3" @click="saveCartForCheckout">Proceed to
+            Checkout</button>
         </router-link>
       </div>
     </div>
@@ -43,7 +45,7 @@ export default {
     async fetchCartItems() {
       try {
         const token = localStorage.getItem('authToken'); // Get token from localStorage
-        const response = await axios.get('http://localhost:5500/cart', {
+        const response = await axios.get('https://mygroceries-backend.vercel.app/cart', {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -66,7 +68,7 @@ export default {
       try {
         const token = localStorage.getItem('authToken');
         // Send DELETE request to remove the product by productName
-        await axios.delete('http://localhost:5500/cart', {
+        await axios.delete('https://mygroceries-backend.vercel.app/cart', {
           headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
@@ -87,7 +89,7 @@ export default {
       if (product) {
         try {
           const token = localStorage.getItem('authToken');
-          await axios.patch('http://localhost:5500/cart', {
+          await axios.patch('https://mygroceries-backend.vercel.app/cart', {
             productName,
             quantity: newQuantity
           }, {

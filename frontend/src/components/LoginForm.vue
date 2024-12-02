@@ -40,7 +40,7 @@ export default {
 
         // Check if the email or username indicates admin
         if (this.isAdmin(this.email)) {
-          response = await axios.post('http://localhost:5500/admin/login', {
+          response = await axios.post('https://mygroceries-backend.vercel.app/admin/login', {
             email: this.email,
             password: this.password
           });
@@ -54,7 +54,7 @@ export default {
           }
         } else {
           // Customer login
-          response = await axios.post('http://localhost:5500/login', {
+          response = await axios.post('https://mygroceries-backend.vercel.app/login', {
             email: this.email,
             password: this.password
           });

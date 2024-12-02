@@ -231,7 +231,7 @@ export default {
     async fetchCategories() {
       try {
         const token = localStorage.getItem('authToken');
-        const response = await axios.get('http://localhost:5500/admin/categories', {
+        const response = await axios.get('https://mygroceries-backend.vercel.app/admin/categories', {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -249,7 +249,7 @@ export default {
     async fetchProducts() {
       try {
         const token = localStorage.getItem('authToken');
-        const response = await axios.get('http://localhost:5500/admin/products', {
+        const response = await axios.get('https://mygroceries-backend.vercel.app/admin/products', {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -276,7 +276,7 @@ export default {
         };
 
         // Make the POST request to your backend
-        const response = await axios.post('http://localhost:5500/admin/products', productData, {
+        const response = await axios.post('https://mygroceries-backend.vercel.app/admin/products', productData, {
           headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json',  // Send JSON data
@@ -334,7 +334,7 @@ export default {
     async deleteProduct(productId) {
       const token = localStorage.getItem('authToken');
       try {
-        await axios.delete(`http://localhost:5500/admin/products/${productId}`, {
+        await axios.delete(`https://mygroceries-backend.vercel.app/admin/products/${productId}`, {
           headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json',

@@ -25,7 +25,7 @@ export default {
   methods: {
     async fetchCategories() {
       try {
-        const response = await axios.get('http://localhost:5500/categories');
+        const response = await axios.get('https://mygroceries-backend.vercel.app/categories');
         this.categories = response.data; // Populate the categories
       } catch (error) {
         console.error('Failed to fetch categories:', error);

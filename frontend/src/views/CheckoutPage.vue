@@ -94,7 +94,7 @@ export default {
     async fetchCartItems() {
       try {
         const token = localStorage.getItem('authToken');
-        const response = await axios.get('http://localhost:5500/cart', {
+        const response = await axios.get('https://mygroceries-backend.vercel.app/cart', {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -108,7 +108,7 @@ export default {
     async fetchPaymentMethods() {
       try {
         const token = localStorage.getItem('authToken');
-        const response = await axios.get('http://localhost:5500/payments', {
+        const response = await axios.get('https://mygroceries-backend.vercel.app/payments', {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -130,7 +130,7 @@ export default {
     async fetchAddresses() {
       try {
         const token = localStorage.getItem('authToken');
-        const response = await axios.get('http://localhost:5500/addresses', {
+        const response = await axios.get('https://mygroceries-backend.vercel.app/addresses', {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -206,7 +206,7 @@ export default {
         const token = localStorage.getItem('authToken');
 
         // Send the request to the backend to create the order
-        const response = await axios.post('http://localhost:5500/checkout', orderPayload, {
+        const response = await axios.post('https://mygroceries-backend.vercel.app/checkout', orderPayload, {
           headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json',
@@ -232,7 +232,7 @@ export default {
     clearCartItems() {
       const token = localStorage.getItem('authToken');
       console.log(token);
-      axios.delete('http://localhost:5500/cart/clear', {
+      axios.delete('https://mygroceries-backend.vercel.app/cart/clear', {
         headers: {
           'Authorization': `Bearer ${token}`
         }

@@ -58,7 +58,7 @@ export default {
     },
     async resetPassword() {
       try {
-        const response = await axios.post('http://localhost:5500/reset-password', {
+        const response = await axios.post('https://mygroceries-backend.vercel.app/reset-password', {
           email: this.email,
           newPassword: this.password,
         });

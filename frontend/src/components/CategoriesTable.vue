@@ -176,7 +176,7 @@ export default {
         console.log(token);
 
         // Set the Authorization header with the Bearer token
-        const response = await axios.get('http://localhost:5500/admin/categories', {
+        const response = await axios.get('https://mygroceries-backend.vercel.app/admin/categories', {
           headers: {
             'Authorization': `Bearer ${token}` // Include the Bearer token
           }
@@ -208,7 +208,7 @@ export default {
         const token = localStorage.getItem('authToken');
 
         // Make DELETE request to backend to delete the category
-        await axios.delete(`http://localhost:5500/admin/categories/${categoryID}`, {
+        await axios.delete(`https://mygroceries-backend.vercel.app/admin/categories/${categoryID}`, {
           headers: {
             'Authorization': `Bearer ${token}` // Pass the token in the Authorization header
           }
@@ -240,7 +240,7 @@ export default {
         };
 
         // Send a PATCH request to update the category
-        const response = await axios.patch(`http://localhost:5500/admin/categories/${categoryId}`,
+        const response = await axios.patch(`https://mygroceries-backend.vercel.app/admin/categories/${categoryId}`,
           updatedCategory,
           {
             headers: {

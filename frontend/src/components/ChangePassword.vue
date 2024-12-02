@@ -40,7 +40,7 @@ export default {
         };
 
         // Send PUT request to the backend to change the password
-        const response = await axios.put('http://localhost:5500/change-password', payload, {
+        const response = await axios.put('https://mygroceries-backend.vercel.app/change-password', payload, {
           headers: {
             'Authorization': `Bearer ${token}`, // Pass the token in the request headers
             'Content-Type': 'application/json'

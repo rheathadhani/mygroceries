@@ -50,7 +50,7 @@ export default {
     async fetchProducts() {
       // Fetch all products
       try {
-        const response = await axios.get('http://localhost:5500/products');
+        const response = await axios.get('https://mygroceries-backend.vercel.app/products');
         this.allProducts = response.data;
         this.filteredProducts = this.allProducts;
       } catch (error) {
@@ -60,7 +60,7 @@ export default {
     async fetchCartItems() {
       try {
         const token = localStorage.getItem('authToken'); // Get token from localStorage
-        const response = await axios.get('http://localhost:5500/cart', {
+        const response = await axios.get('https://mygroceries-backend.vercel.app/cart', {
           headers: {
             'Authorization': `Bearer ${token}`,
           },

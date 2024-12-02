@@ -73,7 +73,7 @@ export default {
   methods: {
     async register() {
       try {
-        const response = await axios.post('http://localhost:5500/register', {
+        const response = await axios.post('https://mygroceries-backend.vercel.app/register', {
           firstName: this.firstName,
           lastName: this.lastName,
           email: this.email,

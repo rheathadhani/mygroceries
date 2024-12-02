@@ -48,7 +48,7 @@ export default {
         };
 
         // Send POST request to add the product to the cart
-        await axios.post('http://localhost:5500/cart', payload, {
+        await axios.post('https://mygroceries-backend.vercel.app/cart', payload, {
           headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
@@ -72,7 +72,7 @@ export default {
         };
 
         // Send PATCH request to update the quantity in the cart
-        await axios.patch('http://localhost:5500/cart', payload, {
+        await axios.patch('https://mygroceries-backend.vercel.app/cart', payload, {
           headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'

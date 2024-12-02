@@ -76,7 +76,7 @@ export default {
     async fetchCustomerDetails() {
       try {
         const token = localStorage.getItem('authToken');
-        const response = await axios.get(`http://localhost:5500/admin/customers/${this.customerId}`, {
+        const response = await axios.get(`https://mygroceries-backend.vercel.app/admin/customers/${this.customerId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         this.customer = response.data[0];

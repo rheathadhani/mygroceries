@@ -44,7 +44,7 @@ export default {
     async fetchAddresses() {
       try {
         const token = localStorage.getItem('authToken'); // Get the token from local storage
-        const response = await axios.get('http://localhost:5500/addresses', {
+        const response = await axios.get('https://mygroceries-backend.vercel.app/addresses', {
           headers: {
             'Authorization': `Bearer ${token}`,
           },
@@ -84,7 +84,7 @@ export default {
       // If the address is new (no ID), send a POST request to add it
       if (!this.editData.ID) {
         try {
-          await axios.post('http://localhost:5500/addresses', this.editData, {
+          await axios.post('https://mygroceries-backend.vercel.app/addresses', this.editData, {
             headers: {
               'Authorization': `Bearer ${token}`,
               'Content-Type': 'application/json',
@@ -106,7 +106,7 @@ export default {
         };
 
         try {
-          await axios.patch(`http://localhost:5500/addresses/${this.editData.ID}`, updatedAddressData, {
+          await axios.patch(`https://mygroceries-backend.vercel.app/addresses/${this.editData.ID}`, updatedAddressData, {
             headers: {
               'Authorization': `Bearer ${token}`,
               'Content-Type': 'application/json',
@@ -147,7 +147,7 @@ export default {
       try {
         const confirmed = confirm('Are you sure you want to delete this address?');  // Confirmation prompt
         if (confirmed) {
-          await axios.delete(`http://localhost:5500/addresses/${addressID}`, {
+          await axios.delete(`https://mygroceries-backend.vercel.app/addresses/${addressID}`, {
             headers: {
               'Authorization': `Bearer ${token}`,  // Include token in headers
             },

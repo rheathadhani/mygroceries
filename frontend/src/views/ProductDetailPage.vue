@@ -76,7 +76,7 @@ export default {
   methods: {
     async fetchProduct() {
       try {
-        const response = await axios.get(`http://localhost:5500/products/${this.$route.params.productID}`);
+        const response = await axios.get(`https://mygroceries-backend.vercel.app/products/${this.$route.params.productID}`);
         this.product = response.data;
 
         // Fetch nutritional information after fetching the product
@@ -146,7 +146,7 @@ export default {
     async checkProductInCart() {
       try {
         const token = localStorage.getItem('authToken');
-        const response = await axios.get(`http://localhost:5500/cart/${this.product.productName}`, {
+        const response = await axios.get(`https://mygroceries-backend.vercel.app/cart/${this.product.productName}`, {
           headers: { 'Authorization': `Bearer ${token}` }
         });
 
@@ -171,7 +171,7 @@ export default {
         };
 
         // Send POST request to add the product to the cart
-        await axios.post('http://localhost:5500/cart', payload, {
+        await axios.post('https://mygroceries-backend.vercel.app/cart', payload, {
           headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
@@ -203,7 +203,7 @@ export default {
         };
 
         // Send PATCH request to update the product quantity in the cart
-        await axios.patch('http://localhost:5500/cart', payload, {
+        await axios.patch('https://mygroceries-backend.vercel.app/cart', payload, {
           headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'

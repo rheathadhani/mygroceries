@@ -111,7 +111,7 @@ export default {
     async fetchPaymentDetails() {
       try {
         const token = localStorage.getItem('authToken'); // Assuming token is stored in localStorage
-        const response = await axios.get('http://localhost:5500/payments', {
+        const response = await axios.get('https://mygroceries-backend.vercel.app/payments', {
           headers: { 'Authorization': `Bearer ${token}` },
         });
         this.bankAccounts = response.data.bankAccounts.map(account => ({
@@ -144,7 +144,7 @@ export default {
 
       try {
         const token = localStorage.getItem('authToken');
-        const response = await axios.post('http://localhost:5500/bank-account', newBankAccount, {
+        const response = await axios.post('https://mygroceries-backend.vercel.app/bank-account', newBankAccount, {
           headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json',
@@ -174,7 +174,7 @@ export default {
 
       try {
         const token = localStorage.getItem('authToken');
-        await axios.post('http://localhost:5500/bank-card', newCard, {
+        await axios.post('https://mygroceries-backend.vercel.app/bank-card', newCard, {
           headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json',
@@ -197,7 +197,7 @@ export default {
     async deleteAccount(accountID) {
       try {
         const token = localStorage.getItem('authToken');
-        await axios.delete(`http://localhost:5500/bank-account/${accountID}`, {
+        await axios.delete(`https://mygroceries-backend.vercel.app/bank-account/${accountID}`, {
           headers: { 'Authorization': `Bearer ${token}` }
         });
         // Remove the account locally if deleted successfully
@@ -209,7 +209,7 @@ export default {
     async deleteCard(cardID) {
       try {
         const token = localStorage.getItem('authToken');
-        await axios.delete(`http://localhost:5500/bank-card/${cardID}`, {
+        await axios.delete(`https://mygroceries-backend.vercel.app/bank-card/${cardID}`, {
           headers: { 'Authorization': `Bearer ${token}` }
         });
         // Remove the card locally if deleted successfully

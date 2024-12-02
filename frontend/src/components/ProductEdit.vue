@@ -86,7 +86,7 @@ export default {
 
       try {
         // Perform an Axios PATCH request to update the product
-        const response = await axios.patch(`http://localhost:5500/admin/products/${this.editableProduct.productID}`, {
+        const response = await axios.patch(`https://mygroceries-backend.vercel.app/admin/products/${this.editableProduct.productID}`, {
           productName: this.editableProduct.productName,
           price: this.editableProduct.price,
           categoryID: this.editableProduct.categoryID,

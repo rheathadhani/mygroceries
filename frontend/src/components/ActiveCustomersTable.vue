@@ -39,7 +39,7 @@ export default {
     async fetchActiveCustomers() {
       const token = localStorage.getItem('authToken');
       try {
-        const response = await axios.get('http://localhost:5500/admin/active-customers', {
+        const response = await axios.get('https://mygroceries-backend.vercel.app/admin/active-customers', {
           headers: {
             Authorization: `Bearer ${token}`,
           },

@@ -158,7 +158,7 @@ export default {
     },
     async fetchOrders() {
       try {
-        const response = await axios.get('http://localhost:5500/admin/orders', {
+        const response = await axios.get('https://mygroceries-backend.vercel.app/admin/orders', {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('authToken')}`
           }
@@ -171,7 +171,7 @@ export default {
     },
     async updateStatus(orderID, newStatus) {
       try {
-        await axios.put(`http://localhost:5500/admin/orders/${orderID}/status`, { status: newStatus }, {
+        await axios.put(`https://mygroceries-backend.vercel.app/admin/orders/${orderID}/status`, { status: newStatus }, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('authToken')}`
           }
@@ -186,7 +186,7 @@ export default {
     async viewOrderDetails(orderID) {
       try {
         // Make API request to fetch order details by orderID
-        const response = await axios.get(`http://localhost:5500/admin/orders/${orderID}/details`, {
+        const response = await axios.get(`https://mygroceries-backend.vercel.app/admin/orders/${orderID}/details`, {
           headers: { Authorization: `Bearer ${localStorage.getItem('authToken')}` }
         });
         this.selectedOrderDetails = response.data.orderDetails; // Store the details

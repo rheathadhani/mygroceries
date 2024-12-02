@@ -152,7 +152,7 @@ export default {
     async fetchCustomers() {
       try {
         const token = localStorage.getItem('authToken');
-        const response = await axios.get('http://localhost:5500/admin/customers', {
+        const response = await axios.get('https://mygroceries-backend.vercel.app/admin/customers', {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -192,7 +192,7 @@ export default {
     deleteCustomer(customerId) {
       const token = localStorage.getItem('authToken');
       axios
-        .delete(`http://localhost:5500/admin/customers/${customerId}`, {
+        .delete(`https://mygroceries-backend.vercel.app/admin/customers/${customerId}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

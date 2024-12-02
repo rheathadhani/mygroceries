@@ -41,7 +41,7 @@
       async fetchLargestOrders() {
         try {
           const token = localStorage.getItem('authToken'); // Assuming you're using auth token
-          const response = await axios.get('http://localhost:5500/admin/largest-orders', {
+          const response = await axios.get('https://mygroceries-backend.vercel.app/admin/largest-orders', {
             headers: {
               Authorization: `Bearer ${token}`,
             }
